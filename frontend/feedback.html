@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Feedback & Complaints - Emirates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --emirates-red: #D71921;
+      --emirates-red-dark: #B01018;
+      --gold: #C9A961;
+      --charcoal: #1A1A1A;
+      --white: #FFFFFF;
+      --gray-100: #F7F7F7;
+      --gray-200: #E8E8E8;
+      --gray-400: #9A9A9A;
+      --gray-600: #666666;
+      --success: #10B981;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Source Sans 3', -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); background: var(--gray-100); min-height: 100vh; }
+    
+    .header { background: var(--charcoal); padding: 16px 40px; }
+    .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon { font-size: 32px; }
+    .logo-text { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--white); }
+    .header-nav { display: flex; gap: 24px; }
+    .header-nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+    
+    .page-header { background: linear-gradient(135deg, #1a1a2e, #16213e); color: var(--white); padding: 60px 40px; text-align: center; }
+    .page-header h1 { font-family: var(--font-display); font-size: 40px; font-weight: 600; margin-bottom: 12px; }
+    .page-header p { opacity: 0.8; font-size: 18px; }
+    
+    .main { max-width: 1100px; margin: -40px auto 60px; padding: 0 20px; position: relative; z-index: 10; }
+    
+    .contact-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .contact-card { background: var(--white); border-radius: 16px; padding: 28px; text-align: center; cursor: pointer; border: 2px solid transparent; transition: all 0.3s; }
+    .contact-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .contact-card.selected { border-color: var(--emirates-red); background: #FEF2F2; }
+    .contact-card i { font-size: 36px; color: var(--emirates-red); margin-bottom: 12px; }
+    .contact-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .contact-card p { font-size: 13px; color: var(--gray-600); }
+    
+    .card { background: var(--white); border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); overflow: hidden; }
+    .card-header { padding: 24px 32px; border-bottom: 1px solid var(--gray-200); }
+    .card-header h2 { font-family: var(--font-display); font-size: 22px; }
+    .card-body { padding: 32px; }
+    
+    .form-section { margin-bottom: 28px; }
+    .form-section h3 { font-size: 15px; font-weight: 600; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; gap: 8px; }
+    .form-section h3 i { color: var(--emirates-red); }
+    
+    .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--charcoal); margin-bottom: 6px; }
+    .form-group .required { color: var(--emirates-red); }
+    .form-input { width: 100%; padding: 12px 14px; font-family: var(--font-body); font-size: 15px; color: var(--charcoal); background: var(--gray-100); border: 2px solid transparent; border-radius: 8px; transition: all 0.3s; }
+    .form-input:focus { outline: none; background: var(--white); border-color: var(--emirates-red); }
+    textarea.form-input { min-height: 120px; resize: vertical; }
+    select.form-input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239A9A9A' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+    
+    .star-rating { display: flex; gap: 6px; }
+    .star-rating i { font-size: 28px; color: var(--gray-200); cursor: pointer; transition: all 0.2s; }
+    .star-rating i:hover, .star-rating i.active { color: var(--gold); }
+    
+    .file-upload { border: 2px dashed var(--gray-200); border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.3s; }
+    .file-upload:hover { border-color: var(--emirates-red); background: #FEF2F2; }
+    .file-upload i { font-size: 32px; color: var(--gray-400); margin-bottom: 8px; }
+    .file-upload p { color: var(--gray-600); font-size: 13px; }
+    .file-upload input { display: none; }
+    
+    .btn { padding: 14px 28px; font-family: var(--font-body); font-size: 15px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-primary { background: var(--emirates-red); color: var(--white); }
+    .btn-primary:hover { background: var(--emirates-red-dark); }
+    .btn-secondary { background: transparent; color: var(--charcoal); border: 1px solid var(--gray-200); }
+    
+    .form-actions { display: flex; gap: 12px; justify-content: flex-end; padding-top: 20px; border-top: 1px solid var(--gray-200); }
+    
+    .info-box { background: #EFF6FF; border-radius: 10px; padding: 16px; margin-bottom: 20px; display: flex; gap: 12px; font-size: 13px; }
+    .info-box i { color: #3B82F6; font-size: 20px; }
+    
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    .modal-overlay.show { display: flex; }
+    .modal { background: var(--white); border-radius: 20px; max-width: 450px; width: 90%; padding: 40px; text-align: center; }
+    .modal .success-icon { width: 70px; height: 70px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
+    .modal .success-icon i { font-size: 35px; color: var(--white); }
+    .modal h2 { font-family: var(--font-display); font-size: 24px; margin-bottom: 10px; }
+    .modal p { color: var(--gray-600); font-size: 14px; margin-bottom: 20px; }
+    .modal .ref { background: var(--gray-100); padding: 16px; border-radius: 8px; margin-bottom: 20px; }
+    .modal .ref strong { font-size: 22px; letter-spacing: 2px; }
+    
+    @media (max-width: 768px) {
+      .header { padding: 16px 20px; }
+      .page-header { padding: 40px 20px; }
+      .page-header h1 { font-size: 28px; }
+      .card-body { padding: 20px; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-actions { flex-direction: column; }
+      .form-actions .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">✈️</span>
+        <span class="logo-text">Emirates</span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html">Home</a>
+        <a href="manage-booking.html">Manage Booking</a>
+        <a href="login.html">Sign In</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-header">
+    <h1>Customer Feedback</h1>
+    <p>Your feedback helps us improve our service</p>
+  </div>
+
+  <main class="main">
+    <div class="contact-options">
+      <div class="contact-card selected" onclick="selectType(this, 'feedback')">
+        <i class="fas fa-star"></i>
+        <h3>Share Feedback</h3>
+        <p>Tell us about your experience</p>
+      </div>
+      <div class="contact-card" onclick="selectType(this, 'complaint')">
+        <i class="fas fa-exclamation-circle"></i>
+        <h3>File Complaint</h3>
+        <p>Report an issue</p>
+      </div>
+      <div class="contact-card" onclick="selectType(this, 'compliment')">
+        <i class="fas fa-heart"></i>
+        <h3>Compliment</h3>
+        <p>Recognize great service</p>
+      </div>
+      <div class="contact-card" onclick="selectType(this, 'suggestion')">
+        <i class="fas fa-lightbulb"></i>
+        <h3>Suggestion</h3>
+        <p>Share your ideas</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h2 id="formTitle">Share Your Feedback</h2>
+      </div>
+      <div class="card-body">
+        <div class="info-box">
+          <i class="fas fa-info-circle"></i>
+          <div>We respond within 3-5 business days. For urgent matters, call +971 600 555 555.</div>
+        </div>
+
+        <form id="feedbackForm" onsubmit="submitFeedback(event)">
+          <input type="hidden" id="feedbackType" value="feedback">
+          
+          <div class="form-section">
+            <h3><i class="fas fa-user"></i> Your Information</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name <span class="required">*</span></label>
+                <input type="text" class="form-input" id="firstName" required>
+              </div>
+              <div class="form-group">
+                <label>Last Name <span class="required">*</span></label>
+                <input type="text" class="form-input" id="lastName" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Email <span class="required">*</span></label>
+                <input type="email" class="form-input" id="email" required>
+              </div>
+              <div class="form-group">
+                <label>Phone</label>
+                <input type="tel" class="form-input" id="phone">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3><i class="fas fa-plane"></i> Flight Details (Optional)</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Booking Reference</label>
+                <input type="text" class="form-input" id="bookingRef" placeholder="ABC123" maxlength="6">
+              </div>
+              <div class="form-group">
+                <label>Flight Number</label>
+                <input type="text" class="form-input" id="flightNumber" placeholder="EK001">
+              </div>
+              <div class="form-group">
+                <label>Flight Date</label>
+                <input type="date" class="form-input" id="flightDate">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3><i class="fas fa-comment"></i> Your Feedback</h3>
+            <div class="form-group">
+              <label>Category <span class="required">*</span></label>
+              <select class="form-input" id="category" required>
+                <option value="">Select category</option>
+                <option value="booking">Booking & Reservations</option>
+                <option value="checkin">Check-in & Boarding</option>
+                <option value="inflight">In-flight Experience</option>
+                <option value="crew">Cabin Crew</option>
+                <option value="food">Food & Beverages</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="lounges">Lounges</option>
+                <option value="baggage">Baggage</option>
+                <option value="delays">Delays/Cancellations</option>
+                <option value="website">Website & App</option>
+                <option value="skywards">Skywards Program</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group" id="ratingGroup">
+              <label>Rating</label>
+              <div class="star-rating">
+                <i class="fas fa-star" onclick="setRating(1)"></i>
+                <i class="fas fa-star" onclick="setRating(2)"></i>
+                <i class="fas fa-star" onclick="setRating(3)"></i>
+                <i class="fas fa-star" onclick="setRating(4)"></i>
+                <i class="fas fa-star" onclick="setRating(5)"></i>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Subject <span class="required">*</span></label>
+              <input type="text" class="form-input" id="subject" required>
+            </div>
+
+            <div class="form-group">
+              <label>Message <span class="required">*</span></label>
+              <textarea class="form-input" id="message" placeholder="Please describe in detail..." required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Attachments</label>
+              <div class="file-upload" onclick="document.getElementById('files').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click to upload files (PNG, JPG, PDF - max 10MB)</p>
+                <input type="file" id="files" multiple accept=".png,.jpg,.jpeg,.pdf">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset</button>
+            <button type="submit" class="btn btn-primary" id="submitBtn">
+              <i class="fas fa-paper-plane"></i> Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <div class="success-icon"><i class="fas fa-check"></i></div>
+      <h2>Thank You!</h2>
+      <p>Your feedback has been submitted successfully.</p>
+      <div class="ref">
+        <small>Reference Number</small><br>
+        <strong id="refNum">FB-XXXXXX</strong>
+      </div>
+      <button class="btn btn-primary" onclick="closeModal()" style="width:100%">Done</button>
+    </div>
+  </div>
+
+  <script>
+    let rating = 0;
+    
+    function selectType(el, type) {
+      document.querySelectorAll('.contact-card').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('feedbackType').value = type;
+      
+      const titles = { feedback: 'Share Your Feedback', complaint: 'File a Complaint', compliment: 'Send a Compliment', suggestion: 'Share Your Suggestion' };
+      document.getElementById('formTitle').textContent = titles[type];
+      document.getElementById('ratingGroup').style.display = type === 'complaint' ? 'none' : 'block';
+    }
+    
+    function setRating(r) {
+      rating = r;
+      document.querySelectorAll('.star-rating i').forEach((s, i) => {
+        s.classList.toggle('active', i < r);
+      });
+    }
+    
+    function resetForm() {
+      document.getElementById('feedbackForm').reset();
+      rating = 0;
+      setRating(0);
+    }
+    
+    function submitFeedback(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+      
+      setTimeout(() => {
+        document.getElementById('refNum').textContent = 'FB-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+        document.getElementById('modal').classList.add('show');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit';
+      }, 1500);
+    }
+    
+    function closeModal() {
+      document.getElementById('modal').classList.remove('show');
+      resetForm();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emirates Skywards - Loyalty Program</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root { --emirates-red: #D71921; --gold: #C9A961; --charcoal: #1A1A1A; --white: #FFFFFF; --gray-100: #F7F7F7; --gray-200: #E8E8E8; --gray-400: #9A9A9A; --gray-600: #666666; --font-display: 'Playfair Display', Georgia, serif; --font-body: 'Source Sans 3', sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); }
+    .header { background: var(--charcoal); padding: 16px 40px; }
+    .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon { font-size: 32px; }
+    .logo-text { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--white); }
+    .header-nav { display: flex; gap: 24px; }
+    .header-nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+    .hero { background: linear-gradient(135deg, #1a1a2e, #16213e); color: var(--white); padding: 80px 40px; }
+    .hero-content { max-width: 1200px; margin: 0 auto; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(201,169,97,0.2); border: 1px solid var(--gold); padding: 8px 16px; border-radius: 50px; font-size: 12px; color: var(--gold); margin-bottom: 20px; }
+    .hero h1 { font-family: var(--font-display); font-size: 48px; margin-bottom: 16px; }
+    .hero h1 span { color: var(--gold); }
+    .hero p { font-size: 18px; opacity: 0.9; max-width: 500px; margin-bottom: 28px; }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+    .hero-stats { display: flex; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+    .hero-stat .number { font-size: 40px; font-weight: 700; color: var(--gold); }
+    .hero-stat .label { font-size: 13px; opacity: 0.8; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; font-size: 15px; font-weight: 600; text-decoration: none; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+    .btn-gold { background: var(--gold); color: var(--charcoal); }
+    .btn-gold:hover { filter: brightness(1.1); }
+    .btn-outline { background: transparent; border: 2px solid var(--white); color: var(--white); }
+    .btn-outline:hover { background: var(--white); color: var(--charcoal); }
+    .btn-primary { background: var(--emirates-red); color: var(--white); }
+    .section { padding: 80px 40px; }
+    .section-header { text-align: center; max-width: 600px; margin: 0 auto 50px; }
+    .section-header h2 { font-family: var(--font-display); font-size: 36px; margin-bottom: 12px; }
+    .section-header p { color: var(--gray-600); }
+    .tiers { background: var(--gray-100); }
+    .tiers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+    .tier-card { background: var(--white); border-radius: 16px; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+    .tier-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+    .tier-header { padding: 28px; text-align: center; color: var(--white); }
+    .tier-card.blue .tier-header { background: linear-gradient(135deg, #1E40AF, #3B82F6); }
+    .tier-card.silver .tier-header { background: linear-gradient(135deg, #64748B, #94A3B8); }
+    .tier-card.gold .tier-header { background: linear-gradient(135deg, #B8860B, #DAA520); }
+    .tier-card.platinum .tier-header { background: linear-gradient(135deg, #374151, #6B7280); }
+    .tier-icon { font-size: 36px; margin-bottom: 12px; }
+    .tier-header h3 { font-family: var(--font-display); font-size: 22px; }
+    .tier-header span { font-size: 13px; opacity: 0.9; }
+    .tier-body { padding: 24px; }
+    .tier-miles { text-align: center; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--gray-200); }
+    .tier-miles small { color: var(--gray-400); font-size: 11px; text-transform: uppercase; }
+    .tier-miles .value { font-size: 18px; font-weight: 700; display: block; margin-top: 4px; }
+    .tier-benefits { list-style: none; font-size: 13px; }
+    .tier-benefits li { padding: 8px 0; display: flex; align-items: center; gap: 8px; color: var(--gray-600); }
+    .tier-benefits li i { color: #10B981; width: 16px; }
+    .tier-benefits li.inactive { opacity: 0.4; }
+    .tier-benefits li.inactive i { color: var(--gray-400); }
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+    .benefit-card { background: var(--gray-100); border-radius: 16px; padding: 32px; transition: all 0.3s; }
+    .benefit-card:hover { background: var(--white); box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+    .benefit-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--emirates-red), #B01018); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--white); margin-bottom: 20px; }
+    .benefit-card h3 { font-size: 18px; margin-bottom: 8px; }
+    .benefit-card p { color: var(--gray-600); font-size: 14px; line-height: 1.6; }
+    .earn-spend { background: var(--charcoal); color: var(--white); }
+    .earn-spend .section-header h2 { color: var(--white); }
+    .earn-spend .section-header p { color: var(--gray-400); }
+    .earn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; max-width: 1000px; margin: 0 auto; }
+    .earn-card { background: #2D2D2D; border-radius: 16px; padding: 32px; }
+    .earn-card h3 { font-family: var(--font-display); font-size: 24px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+    .earn-card h3 i { color: var(--gold); }
+    .earn-list { list-style: none; }
+    .earn-list li { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .earn-list li:last-child { border-bottom: none; }
+    .earn-list .activity { display: flex; align-items: center; gap: 10px; }
+    .earn-list .activity i { color: var(--gold); width: 20px; }
+    .earn-list .miles { font-weight: 700; color: var(--gold); }
+    .cta { background: linear-gradient(135deg, var(--emirates-red), #B01018); color: var(--white); text-align: center; }
+    .cta h2 { font-family: var(--font-display); font-size: 36px; margin-bottom: 12px; }
+    .cta p { font-size: 18px; opacity: 0.9; margin-bottom: 28px; }
+    .cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .footer { background: #2D2D2D; color: var(--white); padding: 40px; text-align: center; }
+    .footer p { color: var(--gray-400); font-size: 14px; }
+    @media (max-width: 768px) {
+      .header { padding: 16px 20px; }
+      .hero { padding: 50px 20px; }
+      .hero h1 { font-size: 32px; }
+      .section { padding: 50px 20px; }
+      .section-header h2 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo"><span class="logo-icon">✈️</span><span class="logo-text">Emirates</span></a>
+      <nav class="header-nav">
+        <a href="index.html">Home</a>
+        <a href="index.html">Book Flights</a>
+        <a href="login.html">Sign In</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge"><i class="fas fa-crown"></i> Award-Winning Loyalty Program</div>
+      <h1>Emirates <span>Skywards</span></h1>
+      <p>Join millions of members earning miles and enjoying exclusive rewards worldwide.</p>
+      <div class="hero-buttons">
+        <a href="register.html" class="btn btn-gold"><i class="fas fa-user-plus"></i> Join Free</a>
+        <a href="login.html" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="number">30M+</div><div class="label">Members</div></div>
+        <div class="hero-stat"><div class="number">160+</div><div class="label">Airlines</div></div>
+        <div class="hero-stat"><div class="number">500+</div><div class="label">Partners</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tiers">
+    <div class="section-header">
+      <h2>Membership Tiers</h2>
+      <p>Progress through tiers and unlock exclusive benefits</p>
+    </div>
+    <div class="tiers-grid">
+      <div class="tier-card blue">
+        <div class="tier-header"><div class="tier-icon">🔵</div><h3>Blue</h3><span>Entry Level</span></div>
+        <div class="tier-body">
+          <div class="tier-miles"><small>Required</small><span class="value">0 Miles</span></div>
+          <ul class="tier-benefits">
+            <li><i class="fas fa-check"></i> Earn Skywards Miles</li>
+            <li><i class="fas fa-check"></i> Member-only offers</li>
+            <li><i class="fas fa-check"></i> Online seat selection</li>
+            <li class="inactive"><i class="fas fa-times"></i> Lounge access</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tier-card silver">
+        <div class="tier-header"><div class="tier-icon">🥈</div><h3>Silver</h3><span>Frequent Traveler</span></div>
+        <div class="tier-body">
+          <div class="tier-miles"><small>Required</small><span class="value">25,000 Miles</span></div>
+          <ul class="tier-benefits">
+            <li><i class="fas fa-check"></i> All Blue benefits</li>
+            <li><i class="fas fa-check"></i> Priority check-in</li>
+            <li><i class="fas fa-check"></i> Extra baggage</li>
+            <li><i class="fas fa-check"></i> Priority boarding</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tier-card gold">
+        <div class="tier-header"><div class="tier-icon">🥇</div><h3>Gold</h3><span>Premium</span></div>
+        <div class="tier-body">
+          <div class="tier-miles"><small>Required</small><span class="value">50,000 Miles</span></div>
+          <ul class="tier-benefits">
+            <li><i class="fas fa-check"></i> All Silver benefits</li>
+            <li><i class="fas fa-check"></i> Business lounge</li>
+            <li><i class="fas fa-check"></i> Guaranteed seats</li>
+            <li><i class="fas fa-check"></i> Chauffeur service</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tier-card platinum">
+        <div class="tier-header"><div class="tier-icon">💎</div><h3>Platinum</h3><span>Elite</span></div>
+        <div class="tier-body">
+          <div class="tier-miles"><small>Required</small><span class="value">150,000 Miles</span></div>
+          <ul class="tier-benefits">
+            <li><i class="fas fa-check"></i> All Gold benefits</li>
+            <li><i class="fas fa-check"></i> First Class lounge</li>
+            <li><i class="fas fa-check"></i> Unlimited upgrades</li>
+            <li><i class="fas fa-check"></i> Exclusive events</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <h2>Member Benefits</h2>
+      <p>Enjoy exclusive privileges every time you fly</p>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon"><i class="fas fa-plane"></i></div>
+        <h3>Earn Miles on Flights</h3>
+        <p>Earn Skywards Miles on Emirates and partner airlines. Miles never expire with account activity.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><i class="fas fa-gift"></i></div>
+        <h3>Redeem for Rewards</h3>
+        <p>Use miles for flights, upgrades, hotels, car rentals, and exclusive experiences.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><i class="fas fa-couch"></i></div>
+        <h3>Lounge Access</h3>
+        <p>Relax in award-winning lounges with dining, spa services, and business facilities.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><i class="fas fa-suitcase"></i></div>
+        <h3>Extra Baggage</h3>
+        <p>Enjoy additional baggage allowance on every flight as you progress through tiers.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><i class="fas fa-car"></i></div>
+        <h3>Chauffeur Service</h3>
+        <p>Complimentary chauffeur-drive to and from airports for Gold and Platinum members.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><i class="fas fa-star"></i></div>
+        <h3>Priority Services</h3>
+        <p>Skip queues with priority check-in, boarding, and baggage handling worldwide.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section earn-spend">
+    <div class="section-header">
+      <h2>Earn & Spend Miles</h2>
+      <p>Multiple ways to earn and exciting ways to spend</p>
+    </div>
+    <div class="earn-grid">
+      <div class="earn-card">
+        <h3><i class="fas fa-plus-circle"></i> Earn Miles</h3>
+        <ul class="earn-list">
+          <li><span class="activity"><i class="fas fa-plane"></i> Emirates Flights</span><span class="miles">Up to 3x</span></li>
+          <li><span class="activity"><i class="fas fa-hotel"></i> Hotel Bookings</span><span class="miles">10,000+</span></li>
+          <li><span class="activity"><i class="fas fa-car"></i> Car Rentals</span><span class="miles">5,000+</span></li>
+          <li><span class="activity"><i class="fas fa-credit-card"></i> Partner Cards</span><span class="miles">1/$1</span></li>
+          <li><span class="activity"><i class="fas fa-shopping-bag"></i> Shopping</span><span class="miles">Up to 20x</span></li>
+        </ul>
+      </div>
+      <div class="earn-card">
+        <h3><i class="fas fa-gift"></i> Spend Miles</h3>
+        <ul class="earn-list">
+          <li><span class="activity"><i class="fas fa-ticket-alt"></i> Flight Rewards</span><span class="miles">7,500+</span></li>
+          <li><span class="activity"><i class="fas fa-arrow-up"></i> Cabin Upgrades</span><span class="miles">15,000+</span></li>
+          <li><span class="activity"><i class="fas fa-bed"></i> Hotel Nights</span><span class="miles">10,000+</span></li>
+          <li><span class="activity"><i class="fas fa-suitcase-rolling"></i> Extra Baggage</span><span class="miles">2,500+</span></li>
+          <li><span class="activity"><i class="fas fa-store"></i> Retail & Dining</span><span class="miles">Varies</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section cta">
+    <h2>Start Earning Today</h2>
+    <p>Join Emirates Skywards free and get 2,500 welcome miles</p>
+    <div class="cta-buttons">
+      <a href="register.html" class="btn btn-gold"><i class="fas fa-user-plus"></i> Join Skywards</a>
+      <a href="login.html" class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2026 Emirates. All rights reserved.</p>
+  </footer>
+</body>
+</html>

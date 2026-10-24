@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emirates SkyCargo - Air Freight & Cargo Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root { --emirates-red: #D71921; --gold: #C9A961; --charcoal: #1A1A1A; --white: #FFFFFF; --gray-100: #F7F7F7; --gray-200: #E8E8E8; --gray-400: #9A9A9A; --gray-600: #666666; --success: #10B981; --font-display: 'Playfair Display', Georgia, serif; --font-body: 'Source Sans 3', sans-serif; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); }
+    .header { background: var(--charcoal); padding: 16px 40px; }
+    .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon { font-size: 32px; }
+    .logo-text { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--white); }
+    .logo-sub { font-size: 12px; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-left: 8px; }
+    .header-nav { display: flex; gap: 24px; }
+    .header-nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+    
+    .hero { background: linear-gradient(135deg, #1a1a2e, #0f3460); color: var(--white); padding: 100px 40px; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: 0; right: 0; width: 50%; height: 100%; background: url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1200&q=80') center/cover; opacity: 0.3; }
+    .hero-content { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(201,169,97,0.2); border: 1px solid var(--gold); padding: 8px 16px; border-radius: 50px; font-size: 12px; color: var(--gold); margin-bottom: 20px; }
+    .hero h1 { font-family: var(--font-display); font-size: 52px; margin-bottom: 16px; line-height: 1.1; }
+    .hero h1 span { color: var(--gold); }
+    .hero p { font-size: 20px; opacity: 0.9; max-width: 550px; margin-bottom: 32px; }
+    .hero-stats { display: flex; gap: 48px; margin-top: 48px; flex-wrap: wrap; }
+    .hero-stat .number { font-size: 44px; font-weight: 700; color: var(--gold); }
+    .hero-stat .label { font-size: 14px; opacity: 0.8; }
+    
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 16px 32px; font-size: 16px; font-weight: 600; text-decoration: none; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+    .btn-primary { background: var(--emirates-red); color: var(--white); }
+    .btn-primary:hover { background: #B01018; transform: translateY(-2px); }
+    .btn-outline { background: transparent; border: 2px solid var(--white); color: var(--white); }
+    .btn-outline:hover { background: var(--white); color: var(--charcoal); }
+    
+    .section { padding: 80px 40px; }
+    .section-header { text-align: center; max-width: 700px; margin: 0 auto 50px; }
+    .section-header h2 { font-family: var(--font-display); font-size: 40px; margin-bottom: 12px; }
+    .section-header p { color: var(--gray-600); font-size: 18px; }
+    
+    .services { background: var(--gray-100); }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1200px; margin: 0 auto; }
+    .service-card { background: var(--white); border-radius: 16px; padding: 32px; transition: all 0.3s; border: 2px solid transparent; }
+    .service-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--emirates-red); }
+    .service-icon { width: 70px; height: 70px; background: linear-gradient(135deg, var(--emirates-red), #B01018); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--white); margin-bottom: 20px; }
+    .service-card h3 { font-size: 20px; margin-bottom: 12px; }
+    .service-card p { color: var(--gray-600); font-size: 14px; line-height: 1.6; margin-bottom: 16px; }
+    .service-features { list-style: none; font-size: 13px; }
+    .service-features li { padding: 6px 0; display: flex; align-items: center; gap: 8px; color: var(--gray-600); }
+    .service-features li i { color: var(--success); }
+    
+    .tracking { background: var(--charcoal); color: var(--white); }
+    .tracking .section-header h2 { color: var(--white); }
+    .tracking .section-header p { color: var(--gray-400); }
+    .tracking-card { background: #2D2D2D; border-radius: 20px; padding: 40px; max-width: 700px; margin: 0 auto; }
+    .tracking-card h3 { font-family: var(--font-display); font-size: 24px; margin-bottom: 24px; text-align: center; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--gray-400); }
+    .form-input { width: 100%; padding: 16px; font-size: 16px; border: 2px solid #444; border-radius: 8px; background: #1a1a1a; color: var(--white); transition: all 0.3s; }
+    .form-input:focus { outline: none; border-color: var(--emirates-red); }
+    .form-input::placeholder { color: var(--gray-600); }
+    .form-row { display: grid; grid-template-columns: 1fr auto; gap: 16px; }
+    
+    .tracking-result { display: none; margin-top: 32px; padding-top: 32px; border-top: 1px solid #444; }
+    .tracking-result.show { display: block; }
+    .tracking-status { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+    .status-icon { width: 60px; height: 60px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+    .status-info h4 { font-size: 18px; margin-bottom: 4px; }
+    .status-info p { color: var(--gray-400); font-size: 14px; }
+    .tracking-timeline { position: relative; padding-left: 30px; }
+    .tracking-timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: #444; }
+    .timeline-item { position: relative; padding-bottom: 24px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before { content: ''; position: absolute; left: -26px; top: 4px; width: 12px; height: 12px; background: var(--success); border-radius: 50%; }
+    .timeline-item.pending::before { background: var(--gray-600); }
+    .timeline-item h5 { font-size: 14px; margin-bottom: 4px; }
+    .timeline-item p { font-size: 12px; color: var(--gray-400); }
+    
+    .network { background: var(--white); }
+    .network-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; max-width: 1000px; margin: 0 auto; }
+    .network-stat { text-align: center; padding: 32px; background: var(--gray-100); border-radius: 16px; }
+    .network-stat .icon { font-size: 40px; color: var(--emirates-red); margin-bottom: 16px; }
+    .network-stat .number { font-size: 48px; font-weight: 700; color: var(--charcoal); }
+    .network-stat .label { font-size: 14px; color: var(--gray-600); margin-top: 4px; }
+    
+    .quote { background: var(--gray-100); }
+    .quote-card { background: var(--white); border-radius: 20px; padding: 40px; max-width: 800px; margin: 0 auto; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+    .quote-card h3 { font-family: var(--font-display); font-size: 28px; margin-bottom: 8px; text-align: center; }
+    .quote-card > p { text-align: center; color: var(--gray-600); margin-bottom: 32px; }
+    .form-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .form-group label { color: var(--charcoal); }
+    .quote .form-input { background: var(--gray-100); border-color: transparent; color: var(--charcoal); }
+    .quote .form-input:focus { background: var(--white); border-color: var(--emirates-red); }
+    select.form-input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%239A9A9A' stroke-width='2'%3E%3Cpolyline points='6,9 12,15 18,9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+    
+    .contact-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; max-width: 1000px; margin: 50px auto 0; }
+    .contact-card { background: var(--gray-100); border-radius: 12px; padding: 24px; text-align: center; }
+    .contact-card i { font-size: 32px; color: var(--emirates-red); margin-bottom: 12px; }
+    .contact-card h4 { font-size: 16px; margin-bottom: 8px; }
+    .contact-card p { font-size: 14px; color: var(--gray-600); }
+    .contact-card a { color: var(--emirates-red); text-decoration: none; font-weight: 600; }
+    
+    .footer { background: #2D2D2D; color: var(--white); padding: 40px; text-align: center; }
+    .footer p { color: var(--gray-400); font-size: 14px; }
+    
+    .message { padding: 16px; border-radius: 8px; margin-top: 20px; display: none; text-align: center; }
+    .message.show { display: block; }
+    .message.success { background: #D1FAE5; color: #065F46; }
+    
+    @media (max-width: 768px) {
+      .header { padding: 16px 20px; }
+      .hero { padding: 60px 20px; }
+      .hero h1 { font-size: 32px; }
+      .hero-stats { gap: 24px; }
+      .section { padding: 50px 20px; }
+      .section-header h2 { font-size: 28px; }
+      .form-row, .form-row-3 { grid-template-columns: 1fr; }
+      .tracking-card, .quote-card { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">📦</span>
+        <span class="logo-text">Emirates</span>
+        <span class="logo-sub">SkyCargo</span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html">Passenger Flights</a>
+        <a href="#services">Services</a>
+        <a href="#tracking">Track Shipment</a>
+        <a href="#quote">Get Quote</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge"><i class="fas fa-globe"></i> Global Cargo Network</div>
+      <h1>Emirates <span>SkyCargo</span></h1>
+      <p>World-class air freight solutions connecting businesses across 6 continents with speed, reliability, and care.</p>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+        <a href="#quote" class="btn btn-primary"><i class="fas fa-calculator"></i> Get a Quote</a>
+        <a href="#tracking" class="btn btn-outline"><i class="fas fa-search"></i> Track Shipment</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="number">140+</div><div class="label">Destinations</div></div>
+        <div class="hero-stat"><div class="number">2.5M</div><div class="label">Tonnes/Year</div></div>
+        <div class="hero-stat"><div class="number">270+</div><div class="label">Aircraft</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section services" id="services">
+    <div class="section-header">
+      <h2>Cargo Services</h2>
+      <p>Specialized solutions for every type of shipment</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-box"></i></div>
+        <h3>General Cargo</h3>
+        <p>Standard air freight for a wide range of commodities with reliable transit times.</p>
+        <ul class="service-features">
+          <li><i class="fas fa-check"></i> Door-to-door delivery</li>
+          <li><i class="fas fa-check"></i> Real-time tracking</li>
+          <li><i class="fas fa-check"></i> Customs clearance</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-snowflake"></i></div>
+        <h3>Emirates Fresh</h3>
+        <p>Temperature-controlled solutions for perishables, pharmaceuticals, and sensitive goods.</p>
+        <ul class="service-features">
+          <li><i class="fas fa-check"></i> Cold chain integrity</li>
+          <li><i class="fas fa-check"></i> Temperature monitoring</li>
+          <li><i class="fas fa-check"></i> GDP compliant</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-pills"></i></div>
+        <h3>Emirates Pharma</h3>
+        <p>Specialized pharmaceutical logistics with end-to-end temperature control.</p>
+        <ul class="service-features">
+          <li><i class="fas fa-check"></i> CEIV Pharma certified</li>
+          <li><i class="fas fa-check"></i> Active containers</li>
+          <li><i class="fas fa-check"></i> Quality assurance</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-gem"></i></div>
+        <h3>Emirates Precious</h3>
+        <p>Secure transport for high-value cargo including jewelry, art, and currency.</p>
+        <ul class="service-features">
+          <li><i class="fas fa-check"></i> Enhanced security</li>
+          <li><i class="fas fa-check"></i> Insurance options</li>
+          <li><i class="fas fa-check"></i> Discreet handling</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-paw"></i></div>
+        <h3>Emirates Animals</h3>
+        <p>Safe and comfortable transport for live animals with expert care.</p>
+        <ul class="service-features">
+          <li><i class="fas fa-check"></i> IATA certified</li>
+          <li><i class="fas fa-check"></i> Vet on call</li>
+          <li><i class="fas fa-check"></i> Climate control</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon"><i class="fas fa-bolt"></i></div>
+        <h3>Emirates Express</h3>
+        <p>Time-critical shipments with guaranteed next-flight-out service.</p>
+        <ul class="service-features">
+          <li><i class="fas fa-check"></i> Priority handling</li>
+          <li><i class="fas fa-check"></i> Express clearance</li>
+          <li><i class="fas fa-check"></i> 24/7 support</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tracking" id="tracking">
+    <div class="section-header">
+      <h2>Track Your Shipment</h2>
+      <p>Real-time visibility of your cargo anywhere in the world</p>
+    </div>
+    <div class="tracking-card">
+      <h3><i class="fas fa-search"></i> Shipment Tracking</h3>
+      <div class="form-row">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label>Air Waybill Number</label>
+          <input type="text" class="form-input" id="awbNumber" placeholder="e.g., 176-12345678">
+        </div>
+        <button class="btn btn-primary" onclick="trackShipment()" style="align-self: flex-end;">
+          <i class="fas fa-search"></i> Track
+        </button>
+      </div>
+      
+      <div class="tracking-result" id="trackingResult">
+        <div class="tracking-status">
+          <div class="status-icon"><i class="fas fa-plane"></i></div>
+          <div class="status-info">
+            <h4>In Transit</h4>
+            <p>Your shipment is on its way to the destination</p>
+          </div>
+        </div>
+        <div class="tracking-timeline">
+          <div class="timeline-item">
+            <h5>Departed Dubai (DXB)</h5>
+            <p>Jan 11, 2026 - 14:30 UTC</p>
+          </div>
+          <div class="timeline-item">
+            <h5>Cleared Customs - Dubai</h5>
+            <p>Jan 11, 2026 - 12:15 UTC</p>
+          </div>
+          <div class="timeline-item">
+            <h5>Received at Origin Warehouse</h5>
+            <p>Jan 11, 2026 - 08:00 UTC</p>
+          </div>
+          <div class="timeline-item pending">
+            <h5>Arriving London (LHR)</h5>
+            <p>Expected: Jan 11, 2026 - 18:45 UTC</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section network">
+    <div class="section-header">
+      <h2>Global Network</h2>
+      <p>Connecting businesses worldwide</p>
+    </div>
+    <div class="network-stats">
+      <div class="network-stat">
+        <div class="icon"><i class="fas fa-globe-americas"></i></div>
+        <div class="number">140+</div>
+        <div class="label">Destinations</div>
+      </div>
+      <div class="network-stat">
+        <div class="icon"><i class="fas fa-plane"></i></div>
+        <div class="number">270+</div>
+        <div class="label">Aircraft Fleet</div>
+      </div>
+      <div class="network-stat">
+        <div class="icon"><i class="fas fa-warehouse"></i></div>
+        <div class="number">15</div>
+        <div class="label">Cargo Terminals</div>
+      </div>
+      <div class="network-stat">
+        <div class="icon"><i class="fas fa-users"></i></div>
+        <div class="number">5,000+</div>
+        <div class="label">Cargo Experts</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section quote" id="quote">
+    <div class="section-header">
+      <h2>Get a Quote</h2>
+      <p>Request a customized freight quote for your shipment</p>
+    </div>
+    <div class="quote-card">
+      <h3>Request Quote</h3>
+      <p>Fill in the details below and our team will get back to you within 24 hours</p>
+      
+      <form id="quoteForm" onsubmit="submitQuote(event)">
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Origin</label>
+            <select class="form-input" required>
+              <option value="">Select city</option>
+              <option value="DXB">Dubai (DXB)</option>
+              <option value="LHR">London (LHR)</option>
+              <option value="JFK">New York (JFK)</option>
+              <option value="SIN">Singapore (SIN)</option>
+              <option value="HKG">Hong Kong (HKG)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Destination</label>
+            <select class="form-input" required>
+              <option value="">Select city</option>
+              <option value="DXB">Dubai (DXB)</option>
+              <option value="LHR">London (LHR)</option>
+              <option value="JFK">New York (JFK)</option>
+              <option value="SIN">Singapore (SIN)</option>
+              <option value="SYD">Sydney (SYD)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Service Type</label>
+            <select class="form-input" required>
+              <option value="">Select service</option>
+              <option value="general">General Cargo</option>
+              <option value="express">Express</option>
+              <option value="fresh">Fresh/Perishables</option>
+              <option value="pharma">Pharmaceutical</option>
+              <option value="animals">Live Animals</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>Weight (kg)</label>
+            <input type="number" class="form-input" placeholder="e.g., 500" required>
+          </div>
+          <div class="form-group">
+            <label>Dimensions (L×W×H cm)</label>
+            <input type="text" class="form-input" placeholder="e.g., 120×80×100">
+          </div>
+          <div class="form-group">
+            <label>Pieces</label>
+            <input type="number" class="form-input" placeholder="e.g., 10" required>
+          </div>
+        </div>
+        
+        <div class="form-row" style="grid-template-columns: 1fr 1fr;">
+          <div class="form-group">
+            <label>Company Name</label>
+            <input type="text" class="form-input" placeholder="Your company" required>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-input" placeholder="your@email.com" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Additional Information</label>
+          <textarea class="form-input" rows="3" placeholder="Special requirements, commodity details, etc."></textarea>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="width: 100%;" id="quoteBtn">
+          <i class="fas fa-paper-plane"></i> Request Quote
+        </button>
+        
+        <div class="message" id="quoteMessage"></div>
+      </form>
+    </div>
+    
+    <div class="contact-info">
+      <div class="contact-card">
+        <i class="fas fa-phone"></i>
+        <h4>24/7 Cargo Support</h4>
+        <p><a href="tel:+97142aborrar">+971 4 708 1111</a></p>
+      </div>
+      <div class="contact-card">
+        <i class="fas fa-envelope"></i>
+        <h4>Email Us</h4>
+        <p><a href="mailto:cargo@emirates.com">cargo@emirates.com</a></p>
+      </div>
+      <div class="contact-card">
+        <i class="fas fa-map-marker-alt"></i>
+        <h4>Head Office</h4>
+        <p>Emirates SkyCargo, Dubai, UAE</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>© 2026 Emirates SkyCargo. All rights reserved.</p>
+  </footer>
+
+  <script>
+    function trackShipment() {
+      const awb = document.getElementById('awbNumber').value.trim();
+      if (!awb) {
+        alert('Please enter an Air Waybill number');
+        return;
+      }
+      document.getElementById('trackingResult').classList.add('show');
+    }
+    
+    function submitQuote(e) {
+      e.preventDefault();
+      const btn = document.getElementById('quoteBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+      
+      setTimeout(() => {
+        const msg = document.getElementById('quoteMessage');
+        msg.className = 'message show success';
+        msg.innerHTML = '<i class="fas fa-check-circle"></i> Quote request submitted! Our team will contact you within 24 hours.';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-paper-plane"></i> Request Quote';
+      }, 1500);
+    }
+  </script>
+</body>
+</html>

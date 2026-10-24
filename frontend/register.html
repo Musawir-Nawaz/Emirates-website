@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Emirates Skywards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --emirates-red: #D71921;
+      --emirates-red-dark: #B01018;
+      --gold: #C9A961;
+      --charcoal: #1A1A1A;
+      --white: #FFFFFF;
+      --gray-100: #F7F7F7;
+      --gray-200: #E8E8E8;
+      --gray-400: #9A9A9A;
+      --gray-600: #666666;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Source Sans 3', -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); min-height: 100vh; display: flex; }
+    
+    .register-container { display: flex; width: 100%; min-height: 100vh; }
+    
+    .register-image {
+      flex: 1;
+      background: linear-gradient(135deg, rgba(26,26,26,0.7), rgba(26,26,26,0.5)), url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1200&q=80') center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      color: var(--white);
+    }
+    
+    .register-image h2 { font-family: var(--font-display); font-size: 48px; font-weight: 600; margin-bottom: 24px; line-height: 1.2; }
+    .register-image p { font-size: 18px; opacity: 0.9; max-width: 400px; margin-bottom: 32px; }
+    
+    .benefits { list-style: none; }
+    .benefits li { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font-size: 16px; }
+    .benefits li i { color: var(--gold); font-size: 20px; }
+    
+    .register-form-container {
+      flex: 0 0 550px;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      overflow-y: auto;
+    }
+    
+    .logo { display: flex; align-items: center; gap: 12px; margin-bottom: 32px; text-decoration: none; }
+    .logo-icon { font-size: 36px; }
+    .logo-text { font-family: var(--font-display); font-size: 28px; font-weight: 600; color: var(--charcoal); }
+    
+    .register-header h1 { font-family: var(--font-display); font-size: 32px; font-weight: 600; color: var(--charcoal); margin-bottom: 8px; }
+    .register-header p { color: var(--gray-600); margin-bottom: 32px; }
+    
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--charcoal); margin-bottom: 8px; }
+    .input-wrapper { position: relative; }
+    .input-wrapper i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--gray-400); font-size: 18px; }
+    .form-input { width: 100%; padding: 14px 14px 14px 48px; font-family: var(--font-body); font-size: 15px; color: var(--charcoal); background: var(--gray-100); border: 2px solid transparent; border-radius: 8px; transition: all 0.3s; }
+    .form-input:focus { outline: none; background: var(--white); border-color: var(--emirates-red); }
+    
+    .terms { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 24px; font-size: 14px; color: var(--gray-600); }
+    .terms input { width: 18px; height: 18px; accent-color: var(--emirates-red); margin-top: 2px; }
+    .terms a { color: var(--emirates-red); text-decoration: none; }
+    
+    .btn { width: 100%; padding: 16px; font-family: var(--font-body); font-size: 16px; font-weight: 600; color: var(--white); background: var(--emirates-red); border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn:hover { background: var(--emirates-red-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(215,25,33,0.4); }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    
+    .divider { display: flex; align-items: center; margin: 24px 0; color: var(--gray-400); font-size: 14px; }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--gray-200); }
+    .divider span { padding: 0 16px; }
+    
+    .login-link { text-align: center; color: var(--gray-600); font-size: 14px; }
+    .login-link a { color: var(--emirates-red); font-weight: 600; text-decoration: none; }
+    
+    .message { padding: 12px 16px; border-radius: 8px; margin-bottom: 20px; font-size: 14px; display: none; align-items: center; gap: 8px; }
+    .message.show { display: flex; }
+    .message.success { background: #d1fae5; color: #065f46; }
+    .message.error { background: #fee2e2; color: #991b1b; }
+    
+    .welcome-bonus { background: linear-gradient(135deg, var(--gold), #D4AF37); border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 16px; }
+    .welcome-bonus i { font-size: 32px; color: var(--charcoal); }
+    .welcome-bonus div h4 { font-size: 14px; font-weight: 700; color: var(--charcoal); }
+    .welcome-bonus div p { font-size: 13px; color: rgba(0,0,0,0.7); }
+    
+    @media (max-width: 1024px) {
+      .register-image { display: none; }
+      .register-form-container { flex: 1; max-width: 100%; }
+    }
+    
+    @media (max-width: 480px) {
+      .register-form-container { padding: 32px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <div class="register-image">
+      <h2>Join Emirates Skywards</h2>
+      <p>Earn miles, enjoy rewards, and unlock exclusive benefits with our award-winning loyalty program.</p>
+      <ul class="benefits">
+        <li><i class="fas fa-check-circle"></i> Earn miles on every flight</li>
+        <li><i class="fas fa-check-circle"></i> Exclusive member-only offers</li>
+        <li><i class="fas fa-check-circle"></i> Priority check-in and boarding</li>
+        <li><i class="fas fa-check-circle"></i> Lounge access at tier levels</li>
+        <li><i class="fas fa-check-circle"></i> Partner rewards worldwide</li>
+      </ul>
+    </div>
+    
+    <div class="register-form-container">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">✈️</span>
+        <span class="logo-text">Emirates</span>
+      </a>
+      
+      <div class="register-header">
+        <h1>Create Account</h1>
+        <p>Join Skywards and start earning miles today</p>
+      </div>
+      
+      <div class="welcome-bonus">
+        <i class="fas fa-gift"></i>
+        <div>
+          <h4>2,500 Welcome Miles</h4>
+          <p>Sign up now and get bonus miles instantly</p>
+        </div>
+      </div>
+      
+      <div class="message" id="message">
+        <i class="fas fa-info-circle"></i>
+        <span id="messageText"></span>
+      </div>
+      
+      <form id="registerForm" onsubmit="register(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <div class="input-wrapper">
+              <i class="fas fa-user"></i>
+              <input type="text" class="form-input" id="firstName" placeholder="First name" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <div class="input-wrapper">
+              <i class="fas fa-user"></i>
+              <input type="text" class="form-input" id="lastName" placeholder="Last name" required>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Email Address</label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope"></i>
+            <input type="email" class="form-input" id="email" placeholder="Enter your email" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Phone Number</label>
+          <div class="input-wrapper">
+            <i class="fas fa-phone"></i>
+            <input type="tel" class="form-input" id="phone" placeholder="+1 234 567 8900">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input type="password" class="form-input" id="password" placeholder="Create a password" required minlength="8">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input type="password" class="form-input" id="confirmPassword" placeholder="Confirm your password" required>
+          </div>
+        </div>
+        
+        <label class="terms">
+          <input type="checkbox" required>
+          <span>I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a></span>
+        </label>
+        
+        <button type="submit" class="btn" id="registerBtn">
+          <span>Create Account</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </form>
+      
+      <div class="divider"><span>or</span></div>
+      
+      <p class="login-link">
+        Already a member? <a href="skywards.html">Skywards</a>
+        <a href="cargo.html">Cargo</a>
+        <a href="login.html">Sign In</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'http://localhost:3000/api';
+    
+    function showMessage(text, type) {
+      const msg = document.getElementById('message');
+      document.getElementById('messageText').textContent = text;
+      msg.className = `message show ${type}`;
+    }
+    
+    async function register(e) {
+      e.preventDefault();
+      
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      if (password !== confirmPassword) {
+        showMessage('Passwords do not match', 'error');
+        return;
+      }
+      
+      if (password.length < 8) {
+        showMessage('Password must be at least 8 characters', 'error');
+        return;
+      }
+      
+      const btn = document.getElementById('registerBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating account...';
+      
+      try {
+        const res = await fetch(`${API_URL}/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ firstName, lastName, email, phone, password })
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+          localStorage.setItem('token', data.data.token);
+          localStorage.setItem('user', JSON.stringify(data.data.user));
+          showMessage(`Welcome to Skywards! Your ID: ${data.data.user.skywardsId}`, 'success');
+          setTimeout(() => window.location.href = 'dashboard.html', 2000);
+        } else {
+          showMessage(data.message || 'Registration failed', 'error');
+        }
+      } catch (err) {
+        showMessage('Connection error. Please try again.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>Create Account</span><i class="fas fa-arrow-right"></i>';
+      }
+    }
+  </script>
+</body>
+</html>

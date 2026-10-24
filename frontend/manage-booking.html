@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Booking - Emirates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --emirates-red: #D71921;
+      --emirates-red-dark: #B01018;
+      --gold: #C9A961;
+      --charcoal: #1A1A1A;
+      --white: #FFFFFF;
+      --gray-100: #F7F7F7;
+      --gray-200: #E8E8E8;
+      --gray-400: #9A9A9A;
+      --gray-600: #666666;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Source Sans 3', -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); background: var(--gray-100); min-height: 100vh; }
+    
+    .header { background: var(--charcoal); padding: 16px 40px; }
+    .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon { font-size: 32px; }
+    .logo-text { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--white); }
+    .header-nav { display: flex; gap: 24px; }
+    .header-nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; }
+    
+    .page-header { background: linear-gradient(135deg, #1a1a2e, #16213e); color: var(--white); padding: 60px 40px; text-align: center; }
+    .page-header h1 { font-family: var(--font-display); font-size: 40px; font-weight: 600; margin-bottom: 12px; }
+    .page-header p { opacity: 0.8; font-size: 18px; }
+    
+    .main { max-width: 900px; margin: -40px auto 60px; padding: 0 20px; position: relative; z-index: 10; }
+    
+    .card { background: var(--white); border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); overflow: hidden; margin-bottom: 24px; }
+    .card-body { padding: 32px; }
+    
+    .form-group { margin-bottom: 24px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--charcoal); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .input-wrapper { position: relative; }
+    .input-wrapper i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--gray-400); font-size: 18px; }
+    .form-input { width: 100%; padding: 16px 16px 16px 48px; font-family: var(--font-body); font-size: 16px; color: var(--charcoal); background: var(--gray-100); border: 2px solid transparent; border-radius: 8px; transition: all 0.3s; }
+    .form-input:focus { outline: none; background: var(--white); border-color: var(--emirates-red); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    
+    .btn { padding: 16px 32px; font-family: var(--font-body); font-size: 16px; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-primary { background: var(--emirates-red); color: var(--white); }
+    .btn-primary:hover { background: var(--emirates-red-dark); }
+    .btn-secondary { background: transparent; color: var(--charcoal); border: 1px solid var(--gray-200); }
+    .btn-danger { background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA; }
+    .btn-danger:hover { background: #FECACA; }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+    
+    .message { padding: 16px 20px; border-radius: 8px; margin-bottom: 24px; display: none; align-items: center; gap: 12px; }
+    .message.show { display: flex; }
+    .message.success { background: #d1fae5; color: #065f46; }
+    .message.error { background: #fee2e2; color: #991b1b; }
+    
+    /* Booking Display */
+    .booking-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+    .booking-ref { font-size: 14px; color: var(--gray-600); }
+    .booking-ref strong { font-size: 24px; color: var(--charcoal); display: block; margin-top: 4px; letter-spacing: 2px; }
+    .booking-status { padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 600; }
+    .booking-status.confirmed { background: #D1FAE5; color: #065F46; }
+    .booking-status.cancelled { background: #FEE2E2; color: #991B1B; }
+    
+    .flight-segment { background: var(--gray-100); border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+    .segment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .segment-badge { font-size: 12px; font-weight: 600; color: var(--emirates-red); text-transform: uppercase; }
+    .flight-info { display: flex; align-items: center; gap: 32px; }
+    .route-city { text-align: center; }
+    .route-city .time { font-size: 28px; font-weight: 700; color: var(--charcoal); }
+    .route-city .code { font-size: 16px; font-weight: 600; margin-top: 4px; }
+    .route-city .date { font-size: 13px; color: var(--gray-600); }
+    .route-line { flex: 1; display: flex; flex-direction: column; align-items: center; }
+    .route-line .duration { font-size: 13px; color: var(--gray-600); margin-bottom: 8px; }
+    .route-line .line { width: 100%; height: 2px; background: var(--gray-200); position: relative; }
+    .route-line .line::before { content: '✈️'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 16px; }
+    .route-line .stops { font-size: 12px; color: var(--success); margin-top: 8px; font-weight: 500; }
+    .flight-meta { display: flex; gap: 24px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--gray-200); }
+    .flight-meta span { font-size: 13px; color: var(--gray-600); display: flex; align-items: center; gap: 6px; }
+    
+    .passengers-section h3 { font-family: var(--font-display); font-size: 18px; margin-bottom: 16px; }
+    .passenger-card { background: var(--gray-100); border-radius: 12px; padding: 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .passenger-info h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+    .passenger-info span { font-size: 13px; color: var(--gray-600); }
+    .passenger-actions { display: flex; gap: 8px; }
+    .passenger-actions button { padding: 8px 16px; font-size: 13px; }
+    
+    .pricing-summary { background: var(--gray-100); border-radius: 12px; padding: 24px; }
+    .pricing-summary h3 { font-family: var(--font-display); font-size: 18px; margin-bottom: 16px; }
+    .pricing-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 14px; }
+    .pricing-row.total { border-top: 2px solid var(--gray-200); margin-top: 12px; padding-top: 16px; font-size: 18px; font-weight: 700; }
+    
+    .actions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 24px; }
+    .action-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s; }
+    .action-card:hover { border-color: var(--emirates-red); box-shadow: 0 4px 12px rgba(215,25,33,0.1); }
+    .action-card i { font-size: 28px; color: var(--emirates-red); margin-bottom: 12px; }
+    .action-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .action-card p { font-size: 12px; color: var(--gray-600); }
+    
+    .search-form { display: none; }
+    .search-form.show { display: block; }
+    .booking-details { display: none; }
+    .booking-details.show { display: block; }
+    
+    @media (max-width: 768px) {
+      .header { padding: 16px 20px; }
+      .page-header { padding: 40px 20px; }
+      .page-header h1 { font-size: 28px; }
+      .card-body { padding: 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .flight-info { flex-direction: column; gap: 16px; }
+      .route-line { width: 100%; }
+      .flight-meta { flex-wrap: wrap; gap: 12px; }
+      .actions-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">✈️</span>
+        <span class="logo-text">Emirates</span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html">Home</a>
+        <a href="checkin.html">Check-in</a>
+        <a href="skywards.html">Skywards</a>
+        <a href="cargo.html">Cargo</a>
+        <a href="login.html">Sign In</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-header">
+    <h1>Manage Your Booking</h1>
+    <p>View, modify, or cancel your flight reservation</p>
+  </div>
+
+  <main class="main">
+    <!-- Search Form -->
+    <div class="card search-form show" id="searchForm">
+      <div class="card-body">
+        <div class="message" id="searchMessage">
+          <i class="fas fa-info-circle"></i>
+          <span id="searchMessageText"></span>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>Booking Reference</label>
+            <div class="input-wrapper">
+              <i class="fas fa-ticket-alt"></i>
+              <input type="text" class="form-input" id="bookingRef" placeholder="e.g., ABC123" maxlength="6" style="text-transform: uppercase;">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <div class="input-wrapper">
+              <i class="fas fa-user"></i>
+              <input type="text" class="form-input" id="lastName" placeholder="Passenger last name">
+            </div>
+          </div>
+        </div>
+        
+        <button class="btn btn-primary" style="width: 100%;" onclick="findBooking()" id="findBtn">
+          <i class="fas fa-search"></i> Find Booking
+        </button>
+      </div>
+    </div>
+
+    <!-- Booking Details -->
+    <div class="booking-details" id="bookingDetails">
+      <div class="card">
+        <div class="card-body">
+          <div class="booking-header">
+            <div class="booking-ref">
+              Booking Reference
+              <strong id="displayRef">-</strong>
+            </div>
+            <span class="booking-status confirmed" id="bookingStatus">Confirmed</span>
+          </div>
+          
+          <div class="flight-segment" id="flightSegment">
+            <div class="segment-header">
+              <span class="segment-badge">Outbound Flight</span>
+              <span id="flightNum">-</span>
+            </div>
+            <div class="flight-info">
+              <div class="route-city">
+                <div class="time" id="depTime">-</div>
+                <div class="code" id="depCode">-</div>
+                <div class="date" id="depDate">-</div>
+              </div>
+              <div class="route-line">
+                <div class="duration" id="duration">-</div>
+                <div class="line"></div>
+                <div class="stops">Non-stop</div>
+              </div>
+              <div class="route-city">
+                <div class="time" id="arrTime">-</div>
+                <div class="code" id="arrCode">-</div>
+                <div class="date" id="arrDate">-</div>
+              </div>
+            </div>
+            <div class="flight-meta">
+              <span><i class="fas fa-plane"></i> <span id="aircraft">-</span></span>
+              <span><i class="fas fa-chair"></i> <span id="cabin">-</span></span>
+              <span><i class="fas fa-wifi"></i> WiFi Available</span>
+            </div>
+          </div>
+          
+          <div class="passengers-section">
+            <h3>Passengers</h3>
+            <div id="passengersList"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="card-body">
+          <div class="pricing-summary">
+            <h3>Price Summary</h3>
+            <div class="pricing-row">
+              <span>Base Fare</span>
+              <span id="baseFare">-</span>
+            </div>
+            <div class="pricing-row">
+              <span>Taxes & Fees</span>
+              <span id="taxesFees">-</span>
+            </div>
+            <div class="pricing-row total">
+              <span>Total Paid</span>
+              <span id="totalPrice">-</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="actions-grid">
+        <div class="action-card" onclick="location.href='checkin.html'">
+          <i class="fas fa-check-circle"></i>
+          <h4>Online Check-in</h4>
+          <p>Check in and get boarding pass</p>
+        </div>
+        <div class="action-card" onclick="alert('Seat selection coming soon!')">
+          <i class="fas fa-chair"></i>
+          <h4>Select Seats</h4>
+          <p>Choose your preferred seats</p>
+        </div>
+        <div class="action-card" onclick="alert('Meal selection coming soon!')">
+          <i class="fas fa-utensils"></i>
+          <h4>Special Meals</h4>
+          <p>Request dietary preferences</p>
+        </div>
+        <div class="action-card" onclick="alert('Baggage options coming soon!')">
+          <i class="fas fa-suitcase-rolling"></i>
+          <h4>Extra Baggage</h4>
+          <p>Purchase additional luggage</p>
+        </div>
+      </div>
+      
+      <div style="display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap;">
+        <button class="btn btn-secondary" onclick="newSearch()">
+          <i class="fas fa-arrow-left"></i> New Search
+        </button>
+        <button class="btn btn-danger" onclick="cancelBooking()" id="cancelBtn">
+          <i class="fas fa-times"></i> Cancel Booking
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const API_URL = 'http://localhost:3000/api';
+    let currentBooking = null;
+    
+    function showMessage(text, type) {
+      const msg = document.getElementById('searchMessage');
+      document.getElementById('searchMessageText').textContent = text;
+      msg.className = `message show ${type}`;
+    }
+    
+    async function findBooking() {
+      const bookingRef = document.getElementById('bookingRef').value.toUpperCase().trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      
+      if (!bookingRef || !lastName) {
+        showMessage('Please enter booking reference and last name', 'error');
+        return;
+      }
+      
+      const btn = document.getElementById('findBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+      
+      try {
+        const res = await fetch(`${API_URL}/bookings/${bookingRef}`);
+        const data = await res.json();
+        
+        if (data.success && data.data) {
+          currentBooking = data.data;
+          
+          const passengerMatch = currentBooking.passengers.some(p => 
+            p.lastName.toLowerCase() === lastName.toLowerCase()
+          );
+          
+          if (!passengerMatch) {
+            showMessage('Last name does not match booking records', 'error');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-search"></i> Find Booking';
+            return;
+          }
+          
+          displayBooking();
+        } else {
+          showMessage('Booking not found. Please check your details.', 'error');
+        }
+      } catch (err) {
+        showMessage('Connection error. Please try again.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-search"></i> Find Booking';
+      }
+    }
+    
+    function displayBooking() {
+      document.getElementById('searchForm').classList.remove('show');
+      document.getElementById('bookingDetails').classList.add('show');
+      
+      document.getElementById('displayRef').textContent = currentBooking.bookingReference;
+      
+      const statusEl = document.getElementById('bookingStatus');
+      statusEl.textContent = currentBooking.bookingStatus.charAt(0).toUpperCase() + currentBooking.bookingStatus.slice(1);
+      statusEl.className = `booking-status ${currentBooking.bookingStatus}`;
+      
+      const flight = currentBooking.flights[0];
+      document.getElementById('flightNum').textContent = flight.flightNumber;
+      document.getElementById('depTime').textContent = flight.departureTime || '07:30';
+      document.getElementById('arrTime').textContent = flight.arrivalTime || '12:15';
+      document.getElementById('depCode').textContent = flight.origin;
+      document.getElementById('arrCode').textContent = flight.destination;
+      document.getElementById('depDate').textContent = new Date(flight.flightDate).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      document.getElementById('arrDate').textContent = new Date(flight.flightDate).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      document.getElementById('cabin').textContent = (flight.cabinClass || 'Economy').charAt(0).toUpperCase() + (flight.cabinClass || 'economy').slice(1);
+      
+      const passengersList = document.getElementById('passengersList');
+      passengersList.innerHTML = currentBooking.passengers.map((p, i) => `
+        <div class="passenger-card">
+          <div class="passenger-info">
+            <h4>${p.title || ''} ${p.firstName} ${p.lastName}</h4>
+            <span>Passenger ${i + 1} • ${p.seatNumber ? 'Seat ' + p.seatNumber : 'No seat assigned'}</span>
+          </div>
+          <div class="passenger-actions">
+            <button class="btn btn-secondary" onclick="alert('Edit passenger coming soon!')">Edit</button>
+          </div>
+        </div>
+      `).join('');
+      
+      const pricing = currentBooking.pricing;
+      document.getElementById('baseFare').textContent = `$${pricing.baseFare}`;
+      document.getElementById('taxesFees').textContent = `$${pricing.taxes + pricing.fees}`;
+      document.getElementById('totalPrice').textContent = `$${pricing.total}`;
+    }
+    
+    function newSearch() {
+      document.getElementById('searchForm').classList.add('show');
+      document.getElementById('bookingDetails').classList.remove('show');
+      document.getElementById('bookingRef').value = '';
+      document.getElementById('lastName').value = '';
+      currentBooking = null;
+    }
+    
+    async function cancelBooking() {
+      if (!confirm('Are you sure you want to cancel this booking? This action cannot be undone.')) {
+        return;
+      }
+      
+      const btn = document.getElementById('cancelBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cancelling...';
+      
+      try {
+        const res = await fetch(`${API_URL}/bookings/${currentBooking.bookingReference}`, {
+          method: 'DELETE'
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+          alert('Booking cancelled successfully. Refund will be processed within 5-7 business days.');
+          location.reload();
+        } else {
+          alert(data.message || 'Cancellation failed');
+        }
+      } catch (err) {
+        alert('Connection error. Please try again.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-times"></i> Cancel Booking';
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Skywards - Emirates</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --emirates-red: #D71921;
+      --emirates-red-dark: #B01018;
+      --gold: #C9A961;
+      --gold-light: #E8D5A3;
+      --charcoal: #1A1A1A;
+      --slate: #2D2D2D;
+      --white: #FFFFFF;
+      --gray-100: #F7F7F7;
+      --gray-200: #E8E8E8;
+      --gray-400: #9A9A9A;
+      --gray-600: #666666;
+      --success: #10B981;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Source Sans 3', -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); background: var(--gray-100); min-height: 100vh; }
+    
+    .header { background: var(--charcoal); padding: 16px 40px; position: sticky; top: 0; z-index: 100; }
+    .header-content { max-width: 1400px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon { font-size: 32px; }
+    .logo-text { font-family: var(--font-display); font-size: 24px; font-weight: 600; color: var(--white); }
+    .header-nav { display: flex; gap: 24px; align-items: center; }
+    .header-nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; transition: color 0.3s; }
+    .header-nav a:hover { color: var(--white); }
+    .user-menu { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+    .user-avatar { width: 40px; height: 40px; background: var(--emirates-red); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-weight: 600; }
+    .user-name { color: var(--white); font-weight: 500; }
+    
+    .hero-section {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: var(--white);
+      padding: 60px 40px;
+    }
+    .hero-content { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; }
+    .hero-text h1 { font-family: var(--font-display); font-size: 36px; font-weight: 600; margin-bottom: 8px; }
+    .hero-text p { opacity: 0.8; font-size: 16px; }
+    
+    .miles-card {
+      background: linear-gradient(135deg, var(--gold), #D4AF37);
+      border-radius: 16px;
+      padding: 32px;
+      min-width: 320px;
+      color: var(--charcoal);
+    }
+    .miles-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .miles-card-header .tier { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    .miles-card-header .id { font-size: 13px; opacity: 0.7; }
+    .miles-amount { font-size: 48px; font-weight: 700; margin-bottom: 4px; }
+    .miles-label { font-size: 14px; opacity: 0.8; }
+    .miles-progress { margin-top: 24px; }
+    .miles-progress-bar { height: 6px; background: rgba(0,0,0,0.2); border-radius: 3px; overflow: hidden; }
+    .miles-progress-bar .fill { height: 100%; background: var(--charcoal); border-radius: 3px; }
+    .miles-progress-text { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; }
+    
+    .main { max-width: 1400px; margin: 0 auto; padding: 40px; }
+    
+    .quick-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 40px; }
+    .action-btn {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .action-btn:hover { border-color: var(--emirates-red); box-shadow: 0 4px 12px rgba(215,25,33,0.1); transform: translateY(-2px); }
+    .action-btn i { font-size: 28px; color: var(--emirates-red); margin-bottom: 12px; display: block; }
+    .action-btn h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .action-btn p { font-size: 12px; color: var(--gray-600); }
+    
+    .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 32px; }
+    
+    .card { background: var(--white); border-radius: 16px; overflow: hidden; }
+    .card-header { padding: 24px; border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; align-items: center; }
+    .card-header h2 { font-family: var(--font-display); font-size: 20px; font-weight: 600; }
+    .card-header a { color: var(--emirates-red); text-decoration: none; font-size: 14px; font-weight: 500; }
+    .card-body { padding: 24px; }
+    
+    .booking-item { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--gray-200); }
+    .booking-item:last-child { border-bottom: none; }
+    .booking-date { background: var(--gray-100); border-radius: 12px; padding: 16px; text-align: center; min-width: 80px; }
+    .booking-date .day { font-size: 28px; font-weight: 700; color: var(--charcoal); }
+    .booking-date .month { font-size: 12px; color: var(--gray-600); text-transform: uppercase; }
+    .booking-details { flex: 1; }
+    .booking-route { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+    .booking-flight { font-size: 13px; color: var(--gray-600); margin-bottom: 8px; }
+    .booking-status { display: inline-block; padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 600; }
+    .booking-status.confirmed { background: #D1FAE5; color: #065F46; }
+    .booking-status.checkedin { background: #DBEAFE; color: #1E40AF; }
+    .booking-actions { display: flex; gap: 8px; margin-top: 12px; }
+    .booking-actions button { padding: 8px 16px; font-size: 13px; border-radius: 6px; cursor: pointer; transition: all 0.3s; font-family: var(--font-body); }
+    .booking-actions .btn-primary { background: var(--emirates-red); color: var(--white); border: none; }
+    .booking-actions .btn-secondary { background: transparent; color: var(--charcoal); border: 1px solid var(--gray-200); }
+    
+    .empty-state { text-align: center; padding: 40px; color: var(--gray-600); }
+    .empty-state i { font-size: 48px; color: var(--gray-200); margin-bottom: 16px; }
+    .empty-state h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--charcoal); }
+    .empty-state .btn { margin-top: 16px; display: inline-flex; padding: 12px 24px; background: var(--emirates-red); color: var(--white); text-decoration: none; border-radius: 8px; font-weight: 600; }
+    
+    .activity-item { display: flex; align-items: center; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--gray-200); }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .activity-icon.earn { background: #D1FAE5; color: #065F46; }
+    .activity-icon.spend { background: #FEE2E2; color: #991B1B; }
+    .activity-details { flex: 1; }
+    .activity-details h4 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .activity-details span { font-size: 12px; color: var(--gray-600); }
+    .activity-miles { font-weight: 700; }
+    .activity-miles.earn { color: #065F46; }
+    .activity-miles.spend { color: #991B1B; }
+    
+    @media (max-width: 1024px) {
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .hero-content { grid-template-columns: 1fr; }
+      .miles-card { width: 100%; }
+    }
+    @media (max-width: 768px) {
+      .header { padding: 16px 20px; }
+      .hero-section { padding: 40px 20px; }
+      .main { padding: 24px 20px; }
+      .hero-text h1 { font-size: 28px; }
+      .quick-actions { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-content">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">✈️</span>
+        <span class="logo-text">Emirates</span>
+      </a>
+      <nav class="header-nav">
+        <a href="index.html">Book Flight</a>
+        <a href="manage-booking.html">Manage Booking</a>
+        <a href="checkin.html">Check-in</a>
+        <div class="user-menu" onclick="toggleUserMenu()">
+          <div class="user-avatar" id="userAvatar">J</div>
+          <span class="user-name" id="userName">John</span>
+        </div>
+        <a href="#" onclick="logout()" style="color: #ef4444;"><i class="fas fa-sign-out-alt"></i></a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Welcome back, <span id="welcomeName">Member</span></h1>
+        <p>Your Emirates Skywards dashboard</p>
+      </div>
+      <div class="miles-card">
+        <div class="miles-card-header">
+          <span class="tier" id="tierBadge">Gold Member</span>
+          <span class="id" id="skywardsId">EK123456789</span>
+        </div>
+        <div class="miles-amount" id="milesBalance">0</div>
+        <div class="miles-label">Skywards Miles</div>
+        <div class="miles-progress">
+          <div class="miles-progress-bar">
+            <div class="fill" id="tierProgress" style="width: 60%;"></div>
+          </div>
+          <div class="miles-progress-text">
+            <span id="tierMiles">27,000 / 50,000 miles</span>
+            <span>Next: Platinum</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="main">
+    <div class="quick-actions">
+      <a href="index.html" class="action-btn">
+        <i class="fas fa-plane"></i>
+        <h4>Book Flight</h4>
+        <p>Search & book flights</p>
+      </a>
+      <a href="checkin.html" class="action-btn">
+        <i class="fas fa-check-circle"></i>
+        <h4>Check-in</h4>
+        <p>Online check-in</p>
+      </a>
+      <a href="manage-booking.html" class="action-btn">
+        <i class="fas fa-ticket-alt"></i>
+        <h4>My Trips</h4>
+        <p>View bookings</p>
+      </a>
+      <a href="#" class="action-btn">
+        <i class="fas fa-gift"></i>
+        <h4>Spend Miles</h4>
+        <p>Redeem rewards</p>
+      </a>
+      <a href="#" class="action-btn">
+        <i class="fas fa-user"></i>
+        <h4>Profile</h4>
+        <p>Account settings</p>
+      </a>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="card">
+        <div class="card-header">
+          <h2>Upcoming Trips</h2>
+          <a href="manage-booking.html">View All</a>
+        </div>
+        <div class="card-body" id="bookingsContainer">
+          <div class="empty-state">
+            <i class="fas fa-suitcase-rolling"></i>
+            <h3>No upcoming trips</h3>
+            <p>Book your next adventure with Emirates</p>
+            <a href="index.html" class="btn">Book a Flight</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2>Miles Activity</h2>
+          <a href="#">View History</a>
+        </div>
+        <div class="card-body" id="activityContainer">
+          <div class="activity-item">
+            <div class="activity-icon earn"><i class="fas fa-plus"></i></div>
+            <div class="activity-details">
+              <h4>Welcome Bonus</h4>
+              <span>Account created</span>
+            </div>
+            <span class="activity-miles earn">+2,500</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const API_URL = 'http://localhost:3000/api';
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const token = localStorage.getItem('token');
+      
+      if (!user || !token) {
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      // Update UI with user info
+      document.getElementById('welcomeName').textContent = user.firstName;
+      document.getElementById('userName').textContent = user.firstName;
+      document.getElementById('userAvatar').textContent = user.firstName.charAt(0);
+      document.getElementById('skywardsId').textContent = user.skywardsId;
+      document.getElementById('milesBalance').textContent = user.skywardsMiles.toLocaleString();
+      document.getElementById('tierBadge').textContent = `${user.skywardsTier} Member`;
+      
+      // Calculate tier progress
+      const tierThresholds = { Blue: 0, Silver: 25000, Gold: 50000, Platinum: 150000 };
+      const nextTier = user.skywardsTier === 'Platinum' ? 'Platinum' : 
+        Object.keys(tierThresholds)[Object.keys(tierThresholds).indexOf(user.skywardsTier) + 1];
+      const currentThreshold = tierThresholds[user.skywardsTier];
+      const nextThreshold = tierThresholds[nextTier];
+      const progress = ((user.skywardsMiles - currentThreshold) / (nextThreshold - currentThreshold)) * 100;
+      
+      document.getElementById('tierProgress').style.width = `${Math.min(progress, 100)}%`;
+      document.getElementById('tierMiles').textContent = `${user.skywardsMiles.toLocaleString()} / ${nextThreshold.toLocaleString()} miles`;
+      
+      loadBookings(token);
+    });
+    
+    async function loadBookings(token) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      
+      try {
+        const res = await fetch(`${API_URL}/bookings/user/${user.id}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        const data = await res.json();
+        
+        if (data.success && data.data.length > 0) {
+          const container = document.getElementById('bookingsContainer');
+          container.innerHTML = data.data.slice(0, 3).map(booking => {
+            const flight = booking.flights[0];
+            const date = new Date(flight.flightDate);
+            return `
+              <div class="booking-item">
+                <div class="booking-date">
+                  <div class="day">${date.getDate()}</div>
+                  <div class="month">${date.toLocaleString('en-US', { month: 'short' })}</div>
+                </div>
+                <div class="booking-details">
+                  <div class="booking-route">${flight.origin} → ${flight.destination}</div>
+                  <div class="booking-flight">${flight.flightNumber} • ${booking.bookingReference}</div>
+                  <span class="booking-status ${booking.checkedIn ? 'checkedin' : 'confirmed'}">
+                    ${booking.checkedIn ? 'Checked In' : 'Confirmed'}
+                  </span>
+                  <div class="booking-actions">
+                    ${!booking.checkedIn ? `<button class="btn-primary" onclick="location.href='checkin.html'">Check-in</button>` : ''}
+                    <button class="btn-secondary" onclick="location.href='manage-booking.html'">Manage</button>
+                  </div>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      } catch (err) {
+        console.error('Failed to load bookings:', err);
+      }
+    }
+    
+    function logout() {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

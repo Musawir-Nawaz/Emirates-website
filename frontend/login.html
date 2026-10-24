@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - Emirates Skywards</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --emirates-red: #D71921;
+      --emirates-red-dark: #B01018;
+      --gold: #C9A961;
+      --charcoal: #1A1A1A;
+      --white: #FFFFFF;
+      --gray-100: #F7F7F7;
+      --gray-200: #E8E8E8;
+      --gray-400: #9A9A9A;
+      --gray-600: #666666;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Source Sans 3', -apple-system, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); min-height: 100vh; display: flex; }
+    
+    .login-container { display: flex; width: 100%; min-height: 100vh; }
+    
+    .login-image {
+      flex: 1;
+      background: linear-gradient(135deg, rgba(26,26,26,0.7), rgba(26,26,26,0.5)), url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1200&q=80') center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 60px;
+      color: var(--white);
+    }
+    
+    .login-image h2 {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    
+    .login-image p {
+      font-size: 18px;
+      opacity: 0.9;
+      max-width: 400px;
+    }
+    
+    .login-form-container {
+      flex: 0 0 500px;
+      background: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+    }
+    
+    .logo { display: flex; align-items: center; gap: 12px; margin-bottom: 48px; text-decoration: none; }
+    .logo-icon { font-size: 36px; }
+    .logo-text { font-family: var(--font-display); font-size: 28px; font-weight: 600; color: var(--charcoal); }
+    
+    .login-header h1 {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+    }
+    
+    .login-header p {
+      color: var(--gray-600);
+      margin-bottom: 32px;
+    }
+    
+    .form-group { margin-bottom: 24px; }
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .input-wrapper { position: relative; }
+    .input-wrapper i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-400);
+      font-size: 18px;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 16px 16px 16px 48px;
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--charcoal);
+      background: var(--gray-100);
+      border: 2px solid transparent;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      background: var(--white);
+      border-color: var(--emirates-red);
+    }
+    
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+    
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--gray-600);
+      cursor: pointer;
+    }
+    
+    .remember-me input { width: 18px; height: 18px; accent-color: var(--emirates-red); }
+    
+    .forgot-password {
+      color: var(--emirates-red);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .forgot-password:hover { text-decoration: underline; }
+    
+    .btn {
+      width: 100%;
+      padding: 16px;
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--white);
+      background: var(--emirates-red);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .btn:hover {
+      background: var(--emirates-red-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(215,25,33,0.4);
+    }
+    
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 32px 0;
+      color: var(--gray-400);
+      font-size: 14px;
+    }
+    
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--gray-200);
+    }
+    
+    .divider span { padding: 0 16px; }
+    
+    .social-login { display: flex; gap: 16px; margin-bottom: 32px; }
+    .social-btn {
+      flex: 1;
+      padding: 14px;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      background: var(--white);
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--charcoal);
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .social-btn:hover { background: var(--gray-100); border-color: var(--gray-400); }
+    .social-btn i { font-size: 18px; }
+    .social-btn.google i { color: #DB4437; }
+    .social-btn.apple i { color: #000; }
+    
+    .signup-link {
+      text-align: center;
+      color: var(--gray-600);
+      font-size: 14px;
+    }
+    
+    .signup-link a {
+      color: var(--emirates-red);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    
+    .signup-link a:hover { text-decoration: underline; }
+    
+    .message {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .message.show { display: flex; align-items: center; gap: 8px; }
+    .message.success { background: #d1fae5; color: #065f46; }
+    .message.error { background: #fee2e2; color: #991b1b; }
+    
+    @media (max-width: 1024px) {
+      .login-image { display: none; }
+      .login-form-container { flex: 1; max-width: 100%; }
+    }
+    
+    @media (max-width: 480px) {
+      .login-form-container { padding: 40px 24px; }
+      .social-login { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-image">
+      <h2>Welcome Back to Emirates</h2>
+      <p>Sign in to manage your bookings, earn miles, and enjoy exclusive member benefits.</p>
+    </div>
+    
+    <div class="login-form-container">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">✈️</span>
+        <span class="logo-text">Emirates</span>
+      </a>
+      
+      <div class="login-header">
+        <h1>Sign In</h1>
+        <p>Enter your Emirates Skywards credentials</p>
+      </div>
+      
+      <div class="message" id="message">
+        <i class="fas fa-info-circle"></i>
+        <span id="messageText"></span>
+      </div>
+      
+      <form id="loginForm" onsubmit="login(event)">
+        <div class="form-group">
+          <label>Email Address</label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope"></i>
+            <input type="email" class="form-input" id="email" placeholder="Enter your email" required>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock"></i>
+            <input type="password" class="form-input" id="password" placeholder="Enter your password" required>
+          </div>
+        </div>
+        
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" checked>
+            Remember me
+          </label>
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+        
+        <button type="submit" class="btn" id="loginBtn">
+          <span>Sign In</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </form>
+      
+      <div class="divider"><span>or continue with</span></div>
+      
+      <div class="social-login">
+        <button class="social-btn google"><i class="fab fa-google"></i> Google</button>
+        <button class="social-btn apple"><i class="fab fa-apple"></i> Apple</button>
+      </div>
+      
+      <p class="signup-link">
+        New to Emirates? <a href="register.html">Join Skywards</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'http://localhost:3000/api';
+    
+    function showMessage(text, type) {
+      const msg = document.getElementById('message');
+      document.getElementById('messageText').textContent = text;
+      msg.className = `message show ${type}`;
+    }
+    
+    async function login(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const btn = document.getElementById('loginBtn');
+      
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+      
+      try {
+        const res = await fetch(`${API_URL}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+          localStorage.setItem('token', data.data.token);
+          localStorage.setItem('user', JSON.stringify(data.data.user));
+          showMessage('Welcome back! Redirecting...', 'success');
+          setTimeout(() => window.location.href = 'dashboard.html', 1500);
+        } else {
+          showMessage(data.message || 'Invalid credentials', 'error');
+        }
+      } catch (err) {
+        showMessage('Connection error. Please try again.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<span>Sign In</span><i class="fas fa-arrow-right"></i>';
+      }
+    }
+  </script>
+</body>
+</html>
